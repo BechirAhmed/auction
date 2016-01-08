@@ -25,3 +25,9 @@ proguard/
 
 # Log Files
 *.log
+
+# Webstorm files
+.idea
+
+# Node.js modules
+server/node_modules

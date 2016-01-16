@@ -30,79 +30,85 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RegisterActivity extends AppCompatActivity {
-    private static final String REGISTER_REQUEST_URL = "http://android-auction.herokuapp.com/api/users";
-    private static final String LOGIN_REQUEST_URL = "http://android-auction.herokuapp.com/api/login";
+public class AddProductActivity extends AppCompatActivity {
+    private static final String ADD_PRODUCT_URL = "http://android-auction.herokuapp.com/api/users";
 
     private UserLoginTask mAuthTask = null;
-    private EditText mUsernameView;
-    private EditText mPasswordView;
-    private View mProgressView;
-    private View mLoginFormView;
+    private EditText mNameView;
+    private EditText mPriceView;
+    private EditText mRealPriceView;
+    private EditText mImgURLView;
+    private EditText mDescriptionView;
+//    private View mProgressView;
+//    private View mLoginFormView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_add_product);
 
-        mUsernameView = (EditText) findViewById(R.id.username);
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
+        mNameView = (EditText) findViewById(R.id.inputProductName);
+        mPriceView = (EditText) findViewById(R.id.inputProductPrice);
+        mRealPriceView = (EditText) findViewById(R.id.inputRealPrice);
+        mImgURLView = (EditText) findViewById(R.id.inputImageURL);
+        mDescriptionView = (EditText) findViewById(R.id.inputDescription);
 
-        Button singInButton = (Button) findViewById(R.id.sign_in_button);
-        singInButton.setOnClickListener(new OnClickListener() {
+        Button addProductButton = (Button) findViewById(R.id.productAddProduct);
+        addProductButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                addProduct();
             }
         });
 
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
+
     }
 
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid username, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
-    private void attemptLogin() {
+    private void addProduct() {
         if (mAuthTask != null) {
             return;
         }
 
         // Reset errors.
-        mUsernameView.setError(null);
-        mPasswordView.setError(null);
+//        mUsernameView.setError(null);
+//        mPasswordView.setError(null);
 
-        String username = mUsernameView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        String name = mNameView.getText().toString();
+        String price = mPriceView.getText().toString();
+        String realPrice = mRealPriceView.getText().toString();
+        String imgUrl = mImgURLView.getText().toString();
+        String description = mDescriptionView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
+        if (TextUtils.isEmpty(name)) {
+            mNameView.setError(getString(R.string.error_field_required));
+            focusView = mNameView;
             cancel = true;
         }
 
-        if (TextUtils.isEmpty(username)) {
-            mUsernameView.setError(getString(R.string.error_field_required));
-            focusView = mUsernameView;
+        if (TextUtils.isEmpty(price)) {
+            mPriceView.setError(getString(R.string.error_field_required));
+            focusView = mPriceView;
             cancel = true;
-        } else if (!isUsernameValid(username)) {
-            mUsernameView.setError(getString(R.string.error_invalid_username));
-            focusView = mUsernameView;
+        }
+
+        if (TextUtils.isEmpty(realPrice)) {
+            mRealPriceView.setError(getString(R.string.error_field_required));
+            focusView = mRealPriceView;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(imgUrl)) {
+            mImgURLView.setError(getString(R.string.error_field_required));
+            focusView = mImgURLView;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(description)) {
+            mDescriptionView.setError(getString(R.string.error_field_required));
+            focusView = mDescriptionView;
             cancel = true;
         }
 
@@ -111,17 +117,9 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             // Show a progress and start a background task to perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(new RegisterLoginRequestModel(username, password));
+            mAuthTask = new AddProductTask(new AddProductRequestModel(username, password));
             mAuthTask.execute((Void) null);
         }
-    }
-
-    private boolean isUsernameValid(String username) {
-        return username.matches("^[a-zA-Z0-9._-]{3,}$");
-    }
-
-    private boolean isPasswordValid(String password) {
-        return password.length() > 4;
     }
 
     /**

@@ -5,6 +5,8 @@ var passport = require('passport'),
 module.exports = function () {
     passport.use(new BasicStrategy(
         function(username, password, done) {
+            console.log(username);
+            console.log(password);
             User.findOne({ username: username }, function (err, user) {
                 if (err) {
                     return done(err);

@@ -9,7 +9,7 @@ module.exports = {
         PORT: PORT
     },
     production: {
-        dbConnectionString: 'mongodb://localhost/android-auction',
+        dbConnectionString: 'mongodb://pesho:testtest@ds035995.mongolab.com:35995/droid-auction',
         ROOT_PATH: ROOT_PATH,
         PORT: PORT
     }

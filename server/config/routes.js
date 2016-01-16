@@ -8,6 +8,9 @@ var auth = require('./auth'),
 module.exports = function (app) {
     app.post('/api/users', usersController.create);
     app.put('/api/users', auth.isAuthenticated(), usersController.update);
+    app.get('/api/login', auth.isAuthenticated(), function (req, res) {
+        res.send('Authorized');
+    });
 
     app.get('/api/users/:username/products', auth.isAuthenticated(), productsController.getUserProductsByUsername);
     app.get('/api/products/:id', auth.isAuthenticated(), productsController.getProductDetails);

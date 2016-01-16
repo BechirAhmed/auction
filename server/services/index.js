@@ -1,11 +1,11 @@
-var fs = require('fs');
-var fileNames = fs.readdirSync('../server/services/services');
-var modules = {};
+var usersService = require('./services/users'),
+    categoriesService = require('./services/categories'),
+    productsService = require('./services/products'),
+    bidsService = require('./services/bids');
 
-for (var i = 0, length = fileNames.length; i < length; i++) {
-    var fileName = fileNames[i].substring(0, fileNames[i].length - 3);
-    var curModule = require('./services/' + fileName);
-    modules[fileName] = curModule;
+module.exports = {
+    users: usersService,
+    categories: categoriesService,
+    products: productsService,
+    bids: bidsService
 }
-
-module.exports = modules;

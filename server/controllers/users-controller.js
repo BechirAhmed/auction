@@ -5,6 +5,7 @@ var User = require('mongoose').model('User'),
 module.exports = {
     create: function (req, res) {
         var user = req.body;
+        console.log(req.body);
         var salt = userHelpers.generateSalt();
         user.salt = salt;
         var hashPass = userHelpers.hash(user.password, salt);

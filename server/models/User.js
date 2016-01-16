@@ -9,7 +9,7 @@ module.exports.init = function () {
         hashPass: String,
         postedProducts: [{type: Schema.Types.ObjectId, ref: 'Product'}],
         roles: [{type: String}],
-        email: {type: String, unique: true},
+        email: {type: String},
         firstName: {type: String},
         lastName: {type: String},
         bids: [{type: Schema.Types.ObjectId, ref: 'Bid'}],

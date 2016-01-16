@@ -4,6 +4,7 @@
   "description": "RESTful service for an Android auction market application",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Team Spinderman",
@@ -20,5 +21,8 @@
   },
   "devDependencies": {
     "nodemon": "^1.8.1"
+  },
+  "engines": {
+      "node": "5.3.0"
   }
 }

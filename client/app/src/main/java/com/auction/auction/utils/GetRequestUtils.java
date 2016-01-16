@@ -37,7 +37,6 @@ public class GetRequestUtils {
                 inputStream = urlConnection.getInputStream();
             }
 
-
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
             String line = null;
             StringBuilder sb = new StringBuilder();

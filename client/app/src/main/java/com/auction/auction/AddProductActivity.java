@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.auction.auction.models.AddProductRequestModel;
 import com.auction.auction.models.RegisterLoginRequestModel;
 import com.auction.auction.models.RegisterResponseModel;
 import com.auction.auction.utils.GetRequestUtils;
@@ -117,7 +118,7 @@ public class AddProductActivity extends AppCompatActivity {
         } else {
             // Show a progress and start a background task to perform the user login attempt.
             showProgress(true);
-            mAuthTask = new AddProductTask(new AddProductRequestModel(username, password));
+            mAuthTask = new AddProductTask(new AddProductRequestModel(name, price, realPrice, imgUrl, description));
             mAuthTask.execute((Void) null);
         }
     }
@@ -157,74 +158,77 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-        private final RegisterLoginRequestModel mModel;
+        private final AddProductRequestModel mModel;
 
-        UserLoginTask(RegisterLoginRequestModel model) {
+        UserLoginTask(AddProductRequestModel model) {
             mModel = model;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            String plainToken = String.format("%s:%s", mModel.username, mModel.password);
+            String plainToken = String.format("%s:%s", mModel.name, mModel.price, mModel.realPrice, mModel.imageUrl, mModel.description);
             String encodedToken = Base64.encodeToString(plainToken.getBytes(), Base64.DEFAULT);
 
-            if (isLoginSuccessful(mModel, encodedToken)) {
-                saveBasicAuthTokenToSharedPref(encodedToken);
-                return true;
-            } else if (isRegistrationSuccessful(mModel)) {
-                saveBasicAuthTokenToSharedPref(encodedToken);
-                return true;
-            } else {
-                return false;
-            }
-        }
 
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-            if (success) {
-                finish();
-            } else {
-                Toast.makeText(getApplicationContext(), "There's a network issue or problem with the server.", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-        }
-
-        private void saveBasicAuthTokenToSharedPref(String encodedToken) {
-            SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString(getString(R.string.auth_token_pref_key), encodedToken);
-            editor.apply();
-        }
-
-        private boolean isLoginSuccessful(RegisterLoginRequestModel model, String encodedToken) {
-            Map<String, String> loginRequestHeaders = new HashMap<String, String>();
-            loginRequestHeaders.put("Authorization", "Basic " + encodedToken);
-            String loginRequestResult = GetRequestUtils.make(RegisterActivity.LOGIN_REQUEST_URL, loginRequestHeaders);
-            Log.d("", loginRequestResult);
-            if (loginRequestResult.equals("Authorized")) {
-                return true;
-            }
-
+            // TODO: To implement
+//            if (isLoginSuccessful(mModel, encodedToken)) {
+//                saveBasicAuthTokenToSharedPref(encodedToken);
+//                return true;
+//            } else if (isRegistrationSuccessful(mModel)) {
+//                saveBasicAuthTokenToSharedPref(encodedToken);
+//                return true;
+//            } else {
+//                return false;
+//            }
             return false;
         }
 
-        private boolean isRegistrationSuccessful(RegisterLoginRequestModel model) {
-            String registerRequestResult = PostRequestUtils.make(RegisterActivity.REGISTER_REQUEST_URL, model, new HashMap<String, String>());
-            Log.d("", registerRequestResult);
-            Gson gson = new Gson();
-            RegisterResponseModel responseModel = gson.fromJson(registerRequestResult, RegisterResponseModel.class);
-            if (responseModel.username != null && responseModel._id != null && responseModel.username.equals(model.username)) {
-                return true;
-            }
+//        @Override
+//        protected void onPostExecute(final Boolean success) {
+//            mAuthTask = null;
+//            showProgress(false);
+//            if (success) {
+//                finish();
+//            } else {
+//                Toast.makeText(getApplicationContext(), "There's a network issue or problem with the server.", Toast.LENGTH_SHORT).show();
+//            }
+//        }
 
-            return false;
-        }
+//        @Override
+//        protected void onCancelled() {
+//            mAuthTask = null;
+//            showProgress(false);
+//        }
+
+//        private void saveBasicAuthTokenToSharedPref(String encodedToken) {
+//            SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+//            SharedPreferences.Editor editor = sharedPref.edit();
+//            editor.putString(getString(R.string.auth_token_pref_key), encodedToken);
+//            editor.apply();
+//        }
+//
+//        private boolean isLoginSuccessful(RegisterLoginRequestModel model, String encodedToken) {
+//            Map<String, String> loginRequestHeaders = new HashMap<String, String>();
+//            loginRequestHeaders.put("Authorization", "Basic " + encodedToken);
+//            String loginRequestResult = GetRequestUtils.make(RegisterActivity.LOGIN_REQUEST_URL, loginRequestHeaders);
+//            Log.d("", loginRequestResult);
+//            if (loginRequestResult.equals("Authorized")) {
+//                return true;
+//            }
+//
+//            return false;
+//        }
+//
+//        private boolean isRegistrationSuccessful(RegisterLoginRequestModel model) {
+//            String registerRequestResult = PostRequestUtils.make(RegisterActivity.REGISTER_REQUEST_URL, model, new HashMap<String, String>());
+//            Log.d("", registerRequestResult);
+//            Gson gson = new Gson();
+//            RegisterResponseModel responseModel = gson.fromJson(registerRequestResult, RegisterResponseModel.class);
+//            if (responseModel.username != null && responseModel._id != null && responseModel.username.equals(model.username)) {
+//                return true;
+//            }
+//
+//            return false;
+//        }
     }
 }

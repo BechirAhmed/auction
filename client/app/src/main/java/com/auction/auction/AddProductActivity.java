@@ -39,8 +39,6 @@ public class AddProductActivity extends AppCompatActivity {
     private EditText mRealPriceView;
     private EditText mImgURLView;
     private EditText mDescriptionView;
-//    private View mProgressView;
-//    private View mLoginFormView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +66,6 @@ public class AddProductActivity extends AppCompatActivity {
         if (mAddProductTask != null) {
             return;
         }
-
-        // Reset errors.
-//        mUsernameView.setError(null);
-//        mPasswordView.setError(null);
 
         String name = mNameView.getText().toString();
         String price = mPriceView.getText().toString();
@@ -115,47 +109,10 @@ public class AddProductActivity extends AppCompatActivity {
         if (cancel) {
             focusView.requestFocus();
         } else {
-            // Show a progress and start a background task to perform the user login attempt.
-//            showProgress(true);
             mAddProductTask = new AddProductTask(new AddProductRequestModel(name, price, realPrice, imgUrl, description));
             mAddProductTask.execute((Void) null);
         }
     }
-
-    /**
-     * Shows the progress UI and hides the register form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-//    private void showProgress(final boolean show) {
-//        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-//        // for very easy animations. If available, use these APIs to fade-in
-//        // the progress spinner.
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-//            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-//
-//            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-//            mLoginFormView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-//                @Override
-//                public void onAnimationEnd(Animator animation) {
-//                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-//                }
-//            });
-//
-//            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-//            mProgressView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-//                @Override
-//                public void onAnimationEnd(Animator animation) {
-//                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-//                }
-//            });
-//        } else {
-//            // The ViewPropertyAnimator APIs are not available, so simply show
-//            // and hide the relevant UI components.
-//            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-//            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-//        }
-//    }
-
     public class AddProductTask extends AsyncTask<Void, Void, Boolean> {
         private final AddProductRequestModel mModel;
 
@@ -168,8 +125,6 @@ public class AddProductActivity extends AppCompatActivity {
             String plainToken = String.format("%s:%s", mModel.name, mModel.price, mModel.realPrice, mModel.imageUrl, mModel.description);
             String encodedToken = Base64.encodeToString(plainToken.getBytes(), Base64.DEFAULT);
 
-
-            // TODO: To implement
             if (isProductAddedSuccessfully(mModel, encodedToken)) {
                 return true;
             }
@@ -177,30 +132,6 @@ public class AddProductActivity extends AppCompatActivity {
             return false;
         }
 
-//        @Override
-//        protected void onPostExecute(final Boolean success) {
-//            mAuthTask = null;
-//            showProgress(false);
-//            if (success) {
-//                finish();
-//            } else {
-//                Toast.makeText(getApplicationContext(), "There's a network issue or problem with the server.", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-
-//        @Override
-//        protected void onCancelled() {
-//            mAuthTask = null;
-//            showProgress(false);
-//        }
-
-//        private void saveBasicAuthTokenToSharedPref(String encodedToken) {
-//            SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-//            SharedPreferences.Editor editor = sharedPref.edit();
-//            editor.putString(getString(R.string.auth_token_pref_key), encodedToken);
-//            editor.apply();
-//        }
-//
         private boolean isProductAddedSuccessfully(AddProductRequestModel model, String encodedToken) {
             Map<String, String> requestHeaders = new HashMap<String, String>();
             requestHeaders.put("Authorization", "Basic " + encodedToken);
@@ -212,17 +143,6 @@ public class AddProductActivity extends AppCompatActivity {
 
             return false;
         }
-//
-//        private boolean isRegistrationSuccessful(RegisterLoginRequestModel model) {
-//            String registerRequestResult = PostRequestUtils.make(RegisterActivity.REGISTER_REQUEST_URL, model, new HashMap<String, String>());
-//            Log.d("", registerRequestResult);
-//            Gson gson = new Gson();
-//            RegisterResponseModel responseModel = gson.fromJson(registerRequestResult, RegisterResponseModel.class);
-//            if (responseModel.username != null && responseModel._id != null && responseModel.username.equals(model.username)) {
-//                return true;
-//            }
-//
-//            return false;
-//        }
+
     }
 }

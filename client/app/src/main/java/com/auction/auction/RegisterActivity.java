@@ -27,12 +27,10 @@ import com.auction.auction.data.services.IAuthenticationRemoteService;
 import com.auction.auction.utils.ValidationUtils;
 
 public class RegisterActivity extends AppCompatActivity {
-<<<<<<< HEAD
-=======
+
     private static final String REGISTER_REQUEST_URL = "http://android-auction.herokuapp.com/api/users";
     private static final String LOGIN_REQUEST_URL = "http://android-auction.herokuapp.com/api/login";
 
->>>>>>> add-product-activity
     private UserLoginTask mAuthTask = null;
     private EditText mUsernameView;
     private EditText mPasswordView;

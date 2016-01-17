@@ -31,6 +31,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private String[] mCategoryNames;
+    private String mAuthToken;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private Toolbar mainToolbar;
@@ -44,10 +45,10 @@ public class MainActivity extends AppCompatActivity {
         sharedPrefs = getApplicationContext()
                 .getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
-        String authToken = sharedPrefs
+        mAuthToken = sharedPrefs
                 .getString(getString(R.string.auth_token_pref_key), null);
 
-        if (authToken == null) {
+        if (mAuthToken == null) {
             Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(intent);
         } else {
@@ -69,12 +70,12 @@ public class MainActivity extends AppCompatActivity {
 
             // Categories are cached each 10 minutes (10 * 60 seconds).
             if (savedUnixTime == Long.MAX_VALUE) {
-                (new GetCategoriesTask()).execute(authToken);
+                (new GetCategoriesTask()).execute(mAuthToken);
                 Log.d("MainActivity", "Categories never cached so far, fetching from server..");
             } else if (currentUnixTime > savedUnixTime + 10 * 60) {
                 Log.d("MainActivity", "Categories cache expired, deleting old ones and fetching new..");
                 categoryLocalService.removeAll();
-                (new GetCategoriesTask()).execute(authToken);
+                (new GetCategoriesTask()).execute(mAuthToken);
             } else {
                 Log.d("MainActivity", "Categories cached, copying from db..");
                 mCategoryNames = copyCategoryNames(categoryLocalService.all());
@@ -97,19 +98,22 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPrefs.edit();
             editor.remove(getString(R.string.auth_token_pref_key));
             editor.apply();
+            Intent intent = getIntent();
             finish();
+            startActivity(intent);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    // This is used to change the FrameLayout
+    // This is used to change the FrameLayout, which contains the products ListView
     private void selectItem(int position) {
-        // Create a new fragment and specify the category to show based on position
+        // Create a new fragment, specify the category to show and pass the needed arguments to populate
         Fragment fragment = new ProductsListFragment();
         Bundle args = new Bundle();
-        args.putInt(ProductsListFragment.CATEGORY_ID, position);
+        args.putString("categoryId", categoryLocalService.getCategoryId(mCategoryNames[position]));
+        args.putString("authToken", mAuthToken);
         fragment.setArguments(args);
 
         // Replace the old products fragment

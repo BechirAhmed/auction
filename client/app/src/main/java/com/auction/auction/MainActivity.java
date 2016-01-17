@@ -5,11 +5,13 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,25 +20,32 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.auction.auction.data.CategoriesRepository;
 import com.auction.auction.data.models.Category;
+import com.auction.auction.data.services.CategoryLocalService;
 import com.auction.auction.data.services.CategoryRemoteService;
+import com.auction.auction.data.services.ICategoryLocalService;
 import com.auction.auction.data.services.ICategoryRemoteService;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private SharedPreferences sharedPref;
-    private String[] mCategoryTitles;
+    private String[] mCategoryNames;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private Toolbar mainToolbar;
+    private SharedPreferences sharedPrefs;
+    private ICategoryLocalService categoryLocalService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        sharedPref = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        String authToken = sharedPref.getString(getString(R.string.auth_token_pref_key), null);
+        sharedPrefs = getApplicationContext()
+                .getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        String authToken = sharedPrefs
+                .getString(getString(R.string.auth_token_pref_key), null);
 
         if (authToken == null) {
             Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
@@ -50,7 +59,28 @@ public class MainActivity extends AppCompatActivity {
             mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
             mDrawerList = (ListView)findViewById(R.id.left_drawer);
 
-            (new GetCategoriesTask()).execute(authToken);
+            CategoriesRepository categoriesRepository = new CategoriesRepository(getApplicationContext());
+            categoryLocalService = new CategoryLocalService(categoriesRepository);
+
+            long savedUnixTime = sharedPrefs
+                    .getLong(getString(R.string.categories_cache_pref_key), Long.MAX_VALUE);
+
+            long currentUnixTime = System.currentTimeMillis() / 1000L;
+
+            // Categories are cached each 10 minutes (10 * 60 seconds).
+            if (savedUnixTime == Long.MAX_VALUE) {
+                (new GetCategoriesTask()).execute(authToken);
+                Log.d("MainActivity", "Categories never cached so far, fetching from server..");
+            } else if (currentUnixTime > savedUnixTime + 10 * 60) {
+                Log.d("MainActivity", "Categories cache expired, deleting old ones and fetching new..");
+                categoryLocalService.removeAll();
+                (new GetCategoriesTask()).execute(authToken);
+            } else {
+                Log.d("MainActivity", "Categories cached, copying from db..");
+                mCategoryNames = copyCategoryNames(categoryLocalService.all());
+                mDrawerList.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.drawer_list_item, mCategoryNames));
+                mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+            }
         }
     }
 
@@ -64,9 +94,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_logout) {
-            SharedPreferences.Editor editor = sharedPref.edit();
+            SharedPreferences.Editor editor = sharedPrefs.edit();
             editor.remove(getString(R.string.auth_token_pref_key));
-            editor.commit();
+            editor.apply();
             finish();
             return true;
         }
@@ -91,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Highlight the selected category, update the title, and close the drawer
         mDrawerList.setItemChecked(position, true);
-        mainToolbar.setTitle(mCategoryTitles[position]);
+        mainToolbar.setTitle(mCategoryNames[position]);
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
@@ -113,19 +143,33 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(final List<Category> categories) {
-            mCategoryTitles = new String[categories.size()];
+            mCategoryNames = copyCategoryNames(categories);
 
-            for (int i = 0; i < categories.size(); i++) {
-                mCategoryTitles[i] = categories.get(i).name;
-            }
-
-            mDrawerList.setAdapter(new ArrayAdapter<String>(getApplicationContext(), R.layout.drawer_list_item, mCategoryTitles));
+            mDrawerList.setAdapter(new ArrayAdapter<String>(getApplicationContext(), R.layout.drawer_list_item, mCategoryNames));
             mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+            long unixTime = System.currentTimeMillis() / 1000L;
+            SharedPreferences.Editor editor = sharedPrefs.edit();
+            editor.putLong(getString(R.string.categories_cache_pref_key), unixTime);
+            editor.apply();
+
+            for (Category category : categories) {
+                categoryLocalService.add(category);
+            }
         }
 
         @Override
         protected void onCancelled() {
             Toast.makeText(getApplicationContext(), "Could not fetch categories. Try again later", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private String[] copyCategoryNames(List<Category> categories) {
+        String[] categoryNames = new String[categories.size()];
+        for (int i = 0; i < categories.size(); i++) {
+            categoryNames[i] = categories.get(i).name;
+        }
+
+        return categoryNames;
     }
 }

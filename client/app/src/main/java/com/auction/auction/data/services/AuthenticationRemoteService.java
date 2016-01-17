@@ -18,7 +18,7 @@ public class AuthenticationRemoteService implements IAuthenticationRemoteService
     }
 
     public boolean isLoginSuccessful(RegisterLoginRequestModel model, String encodedToken) {
-        Map<String, String> loginRequestHeaders = new HashMap<String, String>();
+        Map<String, String> loginRequestHeaders = new HashMap<>();
         loginRequestHeaders.put("Authorization", "Basic " + encodedToken);
         String loginRequestResult = GetRequestUtils.make(AuthenticationRemoteService.LOGIN_REQUEST_URL, loginRequestHeaders);
         if (loginRequestResult.equals("Authorized")) {

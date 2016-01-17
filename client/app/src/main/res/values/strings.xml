@@ -11,31 +11,12 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="error_username_exists">This username already exists</string>
+
+    <!-- Others -->
     <string name="preference_file_key">com.auction.auction.prefs</string>
     <string name="auth_token_pref_key">authToken</string>
     <string name="categories_cache_pref_key">categoriesLastCached</string>
     <string name="action_settings">Settings</string>
     <string name="action_logout">Logout</string>
-
-    <string-array name="Products">
-        <item>Trabant</item>
-        <item>JavaScript: The good parts</item>
-        <item>Venus</item>
-        <item>Trabant</item>
-        <item>Pesho</item>
-        <item>Gosho</item>
-        <item>Trabant</item>
-        <item>JavaScript: The good parts</item>
-        <item>Trabant</item>
-        <item>Trabant</item>
-        <item>JavaScript: The good parts</item>
-        <item>Venus</item>
-        <item>Trabant</item>
-        <item>Pesho</item>
-        <item>Gosho</item>
-        <item>Trabant</item>
-        <item>JavaScript: The good parts</item>
-        <item>Trabant</item>
-    </string-array>
 
 </resources>

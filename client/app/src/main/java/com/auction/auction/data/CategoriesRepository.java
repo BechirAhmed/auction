@@ -9,6 +9,8 @@ import com.auction.auction.data.models.Category;
 
 public class CategoriesRepository extends DatabaseContext {
     private static final String TABLE_NAME = "categories";
+    public static final String CATEGORY_ID_COLUMN = "categoryId";
+    public static final String CATEGORY_NAME_COLUMN = "name";
 
     public CategoriesRepository(Context context) {
         super(context);
@@ -16,17 +18,21 @@ public class CategoriesRepository extends DatabaseContext {
 
     public void add(Category category) {
         ContentValues contentVals = new ContentValues();
-        contentVals.put("categoryId", category.id);
-        contentVals.put("name", category.name);
+        contentVals.put(CATEGORY_ID_COLUMN, category.id);
+        contentVals.put(CATEGORY_NAME_COLUMN, category.name);
         this.db.insert(TABLE_NAME, null, contentVals);
-        Log.d("Inserted category: ", category.name);
+        Log.d("Inserted category", category.name);
     }
 
     public Cursor all() {
-        return this.db.query(TABLE_NAME, new String[] {"categoryId", "name"}, null, null, null, null, null);
+        return this.db.query(TABLE_NAME, new String[] {CATEGORY_ID_COLUMN, CATEGORY_NAME_COLUMN}, null, null, null, null, null);
     }
 
     public void removeAll() {
         this.db.execSQL("DELETE FROM " + TABLE_NAME);
+    }
+
+    public Cursor getByName(String name) {
+        return this.db.query(TABLE_NAME, new String[] {CATEGORY_ID_COLUMN, CATEGORY_NAME_COLUMN}, "name=?", new String[] { name }, null, null, null, null);
     }
 }

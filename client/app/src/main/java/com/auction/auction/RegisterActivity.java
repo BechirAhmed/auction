@@ -12,7 +12,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,7 +21,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.auction.auction.data.models.RegisterLoginRequestModel;
+import com.auction.auction.data.models.RegisterRequestModel;
 import com.auction.auction.data.services.AuthenticationRemoteService;
 import com.auction.auction.data.services.IAuthenticationRemoteService;
 import com.auction.auction.utils.ValidationUtils;
@@ -100,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             // Show a progress and start a background task to perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(new RegisterLoginRequestModel(username, password));
+            mAuthTask = new UserLoginTask(new RegisterRequestModel(username, password));
             mAuthTask.execute((Void) null);
         }
     }
@@ -143,9 +142,9 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-        private final RegisterLoginRequestModel mModel;
+        private final RegisterRequestModel mModel;
 
-        UserLoginTask(RegisterLoginRequestModel model) {
+        UserLoginTask(RegisterRequestModel model) {
             mModel = model;
         }
 
@@ -155,7 +154,7 @@ public class RegisterActivity extends AppCompatActivity {
             String encodedToken = Base64.encodeToString(plainToken.getBytes(), Base64.DEFAULT);
 
             IAuthenticationRemoteService authenticationRemoteService = new AuthenticationRemoteService();
-            if (authenticationRemoteService.isLoginSuccessful(mModel, encodedToken)) {
+            if (authenticationRemoteService.isLoginSuccessful(encodedToken)) {
                 saveBasicAuthTokenToSharedPref(encodedToken);
                 return true;
             } else if (authenticationRemoteService.isRegistrationSuccessful(mModel)) {

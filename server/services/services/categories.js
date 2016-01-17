@@ -86,7 +86,7 @@ module.exports = {
                         reject(err);
                     }
                     else {
-                        resolve(category);
+                        resolve(category.products);
                     }
                 });
         });

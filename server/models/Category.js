@@ -7,6 +7,15 @@ module.exports.init = function () {
         products: [{type: Schema.Types.ObjectId, ref: 'Product'}]
     });
 
+    categorySchema.virtual('id').get(function(){
+        return this._id.toHexString();
+    });
+
+    // Ensure virtual fields are serialised.
+    categorySchema.set('toJSON', {
+        virtuals: true
+    });
+
     var Category = mongoose.model('Category', categorySchema);
 
     Category.find({}).exec(function (err, collection) {

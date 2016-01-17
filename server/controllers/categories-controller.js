@@ -25,10 +25,7 @@ module.exports = {
 
         services.categories.getProductsByCategoryId(id)
             .then(function (category) {
-                res.send({
-                    categoryId: category.id,
-                    products: category.products
-                });
+                res.send(category.products);
             }, function (err) {
                 res.send(err);
             });

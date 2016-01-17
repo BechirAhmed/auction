@@ -18,6 +18,15 @@ module.exports.init = function () {
         bids: [{type: Schema.Types.ObjectId, ref: 'Bid'}]
     });
 
+    productSchema.virtual('id').get(function(){
+        return this._id.toHexString();
+    });
+
+    // Ensure virtual fields are serialised.
+    productSchema.set('toJSON', {
+        virtuals: true
+    });
+
     productSchema.post('save', function (doc) {
         Category.findOne({'_id': doc.categoryId}).exec(function (err, category) {
             category.products.push(doc.id);

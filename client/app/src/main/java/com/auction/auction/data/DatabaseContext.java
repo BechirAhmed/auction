@@ -23,8 +23,8 @@ public class DatabaseContext extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //db.execSQL("DROP TABLE IF EXISTS categories");
-        //onCreate(db);
+        db.execSQL("DROP TABLE IF EXISTS categories");
+        onCreate(db);
     }
 
     public void open() throws SQLException {

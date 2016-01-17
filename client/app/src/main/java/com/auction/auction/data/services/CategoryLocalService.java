@@ -22,8 +22,8 @@ public class CategoryLocalService implements ICategoryLocalService {
         List<Category> categories = new ArrayList<>();
         if (cursor.moveToFirst()) {
             do {
-                String id = cursor.getString(cursor.getColumnIndex("categoryId"));
-                String name = cursor.getString(cursor.getColumnIndex("name"));
+                String id = cursor.getString(cursor.getColumnIndex(CategoriesRepository.CATEGORY_ID_COLUMN));
+                String name = cursor.getString(cursor.getColumnIndex(CategoriesRepository.CATEGORY_NAME_COLUMN));
                 Category currentCategory = new Category();
                 currentCategory.id = id;
                 currentCategory.name = name;
@@ -32,8 +32,6 @@ public class CategoryLocalService implements ICategoryLocalService {
         }
 
         cursor.close();
-        mRepository.close();
-
         return categories;
     }
 
@@ -56,5 +54,15 @@ public class CategoryLocalService implements ICategoryLocalService {
 
     public void removeAll() {
         mRepository.removeAll();
+    }
+
+    public String getCategoryId(String name) {
+        Cursor cursor = mRepository.getByName(name);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        return cursor.getString(cursor.getColumnIndex(CategoriesRepository.CATEGORY_ID_COLUMN));
     }
 }

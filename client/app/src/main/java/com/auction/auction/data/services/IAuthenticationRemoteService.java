@@ -1,9 +1,9 @@
 package com.auction.auction.data.services;
 
-import com.auction.auction.data.models.RegisterLoginRequestModel;
+import com.auction.auction.data.models.RegisterRequestModel;
 
 public interface IAuthenticationRemoteService {
-    boolean isLoginSuccessful(RegisterLoginRequestModel model, String encodedToken);
+    boolean isLoginSuccessful(String encodedToken);
 
-    boolean isRegistrationSuccessful(RegisterLoginRequestModel model);
+    boolean isRegistrationSuccessful(RegisterRequestModel model);
 }

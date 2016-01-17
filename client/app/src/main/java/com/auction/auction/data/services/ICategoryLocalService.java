@@ -9,4 +9,6 @@ public interface ICategoryLocalService {
     void add(Category category);
 
     void removeAll();
+
+    String getCategoryId(String name);
 }

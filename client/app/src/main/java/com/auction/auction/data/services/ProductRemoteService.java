@@ -1,5 +1,7 @@
 package com.auction.auction.data.services;
 
+import android.util.Log;
+
 import com.auction.auction.data.models.Bid;
 import com.auction.auction.data.models.Category;
 import com.auction.auction.data.models.Product;
@@ -25,7 +27,10 @@ public class ProductRemoteService implements IProductRemoteService {
         Map<String, String> requestHeaders = new HashMap<String, String>();
         requestHeaders.put("Authorization", "Basic " + mEncodedAuthKey);
 
+        Log.d("RemoteService", " categoryId: " + categoryId);
+        Log.d("RemoteService", " authToken: " + mEncodedAuthKey);
         String productsResult = GetRequestUtils.make(String.format(PRODUCTS_REQUEST_URL_FORMAT, categoryId), requestHeaders);
+        Log.d("wat", " " + productsResult);
         return new Gson().fromJson(productsResult, new TypeToken<List<Product>>(){}.getType());
     }
 

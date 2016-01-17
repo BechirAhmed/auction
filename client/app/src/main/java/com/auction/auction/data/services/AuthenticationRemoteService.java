@@ -1,6 +1,8 @@
 package com.auction.auction.data.services;
 
-import com.auction.auction.data.models.RegisterLoginRequestModel;
+import android.util.Log;
+
+import com.auction.auction.data.models.RegisterRequestModel;
 import com.auction.auction.data.models.RegisterResponseModel;
 import com.auction.auction.utils.GetRequestUtils;
 import com.auction.auction.utils.PostRequestUtils;
@@ -17,7 +19,7 @@ public class AuthenticationRemoteService implements IAuthenticationRemoteService
 
     }
 
-    public boolean isLoginSuccessful(RegisterLoginRequestModel model, String encodedToken) {
+    public boolean isLoginSuccessful(String encodedToken) {
         Map<String, String> loginRequestHeaders = new HashMap<>();
         loginRequestHeaders.put("Authorization", "Basic " + encodedToken);
         String loginRequestResult = GetRequestUtils.make(AuthenticationRemoteService.LOGIN_REQUEST_URL, loginRequestHeaders);
@@ -28,7 +30,7 @@ public class AuthenticationRemoteService implements IAuthenticationRemoteService
         return false;
     }
 
-    public boolean isRegistrationSuccessful(RegisterLoginRequestModel model) {
+    public boolean isRegistrationSuccessful(RegisterRequestModel model) {
         String registerRequestResult = PostRequestUtils.make(AuthenticationRemoteService.REGISTER_REQUEST_URL, model, new HashMap<String, String>());
         RegisterResponseModel responseModel = new Gson().fromJson(registerRequestResult, RegisterResponseModel.class);
         if (responseModel.username != null && responseModel._id != null && responseModel.username.equals(model.username)) {

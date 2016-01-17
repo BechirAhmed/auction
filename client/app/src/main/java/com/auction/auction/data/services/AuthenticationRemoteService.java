@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AuthenticationRemoteService implements IAuthenticationRemoteService {
-    private static final String REGISTER_REQUEST_URL = "http://192.168.1.106:3000/api/users";
-    private static final String LOGIN_REQUEST_URL = "http://192.168.1.106:3000/api/login";
+    private static final String REGISTER_REQUEST_URL = "http://android-auction.herokuapp.com/api/users";
+    private static final String LOGIN_REQUEST_URL = "http://android-auction.herokuapp.com/api/login";
 
     public AuthenticationRemoteService() {
 

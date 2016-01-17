@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ProductRemoteService implements IProductRemoteService {
-    private static final String PRODUCTS_REQUEST_URL_FORMAT = "http://192.168.1.106:3000/api/categories/%s/products";
-    private static final String PRODUCT_BIDS_REQUEST_URL_FORMAT = "http://192.168.1.106:3000/api/products/%s/bids";
+    private static final String PRODUCTS_REQUEST_URL_FORMAT = "http://android-auction.herokuapp.com/api/categories/%s/products";
+    private static final String PRODUCT_BIDS_REQUEST_URL_FORMAT = "http://android-auction.herokuapp.com/api/products/%s/bids";
 
     private String mEncodedAuthKey;
 

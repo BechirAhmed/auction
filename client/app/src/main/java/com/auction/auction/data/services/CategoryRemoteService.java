@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CategoryRemoteService implements ICategoryRemoteService {
-    private static final String CATEGORIES_REQUEST_URL = "http://192.168.1.106:3000/api/categories";
+    private static final String CATEGORIES_REQUEST_URL = "http://android-auction.herokuapp.com/api/categories";
     private String mEncodedAuthKey;
 
     public CategoryRemoteService(String encodedAuthKey) {

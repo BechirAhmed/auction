@@ -4,7 +4,7 @@ import java.util.List;
 
 public class AddProductResponseModel {
     public String name;
-    public String _id;
+    public String id;
     public Integer price;
     public Integer currentPrice;
     public String imageUrl;

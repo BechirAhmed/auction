@@ -2,15 +2,15 @@ package com.auction.auction.data.models;
 
 public class AddProductRequestModel {
     public String name;
-    public Integer price;
-    public Integer realPrice;
+    public Double price;
+    public Double currentPrice;
     public String imageUrl;
     public String description;
 
-    public AddProductRequestModel(String name, String price, String realPrice, String imageUrl, String description) {
+    public AddProductRequestModel(String name, Double startingPrice, Double realPrice, String imageUrl, String description) {
         this.name = name;
-        this.price = Integer.parseInt(price);
-        this.realPrice = Integer.parseInt(realPrice);
+        this.currentPrice = startingPrice;
+        this.price = realPrice;
         this.imageUrl = imageUrl;
         this.description = description;
     }

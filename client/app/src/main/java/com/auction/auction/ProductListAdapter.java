@@ -32,6 +32,7 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
         Picasso
                 .with(getContext())
                 .load(product.imageUrl)
+                .fit()
                 .into(imageView);
 
         TextView productName = (TextView) convertView.findViewById(R.id.title);

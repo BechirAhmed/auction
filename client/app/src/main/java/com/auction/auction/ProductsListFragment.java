@@ -63,7 +63,7 @@ public class ProductsListFragment extends ListFragment implements OnItemClickLis
         @Override
         protected void onPostExecute(final List<Product> productsList) {
             if (productsList == null || productsList.size() == 0) {
-                Toast.makeText(getActivity(), "No products for this category so far.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.no_products_for_category, Toast.LENGTH_SHORT).show();
             }
 
             ProductListAdapter adapter = new ProductListAdapter(getActivity(), productsList);
@@ -72,7 +72,7 @@ public class ProductsListFragment extends ListFragment implements OnItemClickLis
 
         @Override
         protected void onCancelled() {
-            Toast.makeText(getActivity(), "Could not fetch products. Try again later", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.could_not_fetch_products, Toast.LENGTH_LONG).show();
         }
     }
 }

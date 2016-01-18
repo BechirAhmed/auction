@@ -103,10 +103,18 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
-        else if(id == R.id.action_add_product) {
-            Intent intent = new Intent(this, AddProductActivity.class);
-            startActivity(intent);
-            finish();
+        else if (id == R.id.action_add_product) {
+            String categoryName = getSupportActionBar().getTitle().toString();
+            if (categoryName.equals(R.string.app_name)) {
+                Toast.makeText(getApplicationContext(), R.string.must_choose_a_category_first, Toast.LENGTH_SHORT).show();
+                return false;
+            } else {
+                Intent intent = new Intent(this, AddProductActivity.class);
+                intent.putExtra("authToken", mAuthToken);
+                intent.putExtra("categoryId", categoryLocalService.getCategoryId(mainToolbar.getTitle().toString()));
+                startActivity(intent);
+                return true;
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -169,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onCancelled() {
-            Toast.makeText(getApplicationContext(), "Could not fetch categories. Try again later", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.could_not_fetch_categories, Toast.LENGTH_LONG).show();
         }
     }
 

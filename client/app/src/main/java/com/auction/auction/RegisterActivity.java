@@ -27,10 +27,6 @@ import com.auction.auction.data.services.IAuthenticationRemoteService;
 import com.auction.auction.utils.ValidationUtils;
 
 public class RegisterActivity extends AppCompatActivity {
-
-    private static final String REGISTER_REQUEST_URL = "http://android-auction.herokuapp.com/api/users";
-    private static final String LOGIN_REQUEST_URL = "http://android-auction.herokuapp.com/api/login";
-
     private UserLoginTask mAuthTask = null;
     private EditText mUsernameView;
     private EditText mPasswordView;
@@ -178,7 +174,7 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             } else {
-                Toast.makeText(getApplicationContext(), "There's a network issue or problem with the server.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.network_issue_or_server_problem, Toast.LENGTH_SHORT).show();
             }
         }
 

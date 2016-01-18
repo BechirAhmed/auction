@@ -1,7 +1,5 @@
 package com.auction.auction.data.services;
 
-import android.util.Log;
-
 import com.auction.auction.data.models.RegisterRequestModel;
 import com.auction.auction.data.models.RegisterResponseModel;
 import com.auction.auction.utils.GetRequestUtils;

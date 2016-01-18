@@ -1,7 +1,6 @@
 package com.auction.auction.data.services;
 
 import android.database.Cursor;
-import android.util.Log;
 
 import com.auction.auction.data.CategoriesRepository;
 import com.auction.auction.data.models.Category;

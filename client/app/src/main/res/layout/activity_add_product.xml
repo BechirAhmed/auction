@@ -11,125 +11,118 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".AddProductActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="22dp"
-        android:text="Name:"
-        android:id="@+id/productName"
-        android:layout_alignBottom="@+id/inputProductName"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 
-    <EditText
-        android:layout_width="145dp"
+    <LinearLayout
+        android:id="@+id/add_product_form"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/inputProductName"
-        android:layout_gravity="right"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/productName"
-        android:layout_alignLeft="@+id/inputProductPrice"
-        android:layout_alignStart="@+id/inputProductPrice"
-        android:text="Enter product name" />
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="22dp"
-        android:text="Price:"
-        android:id="@+id/productPrice"
-        android:layout_marginTop="38dp"
-        android:layout_below="@+id/productName"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp">
 
-    <EditText
-        android:layout_width="145dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/inputProductPrice"
-        android:layout_gravity="right"
-        android:layout_alignBottom="@+id/productPrice"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/productRealPrice"
-        android:layout_toRightOf="@+id/productRealPrice"
-        android:text="Enter product price" />
+            <EditText
+                android:id="@+id/product_name_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_product_name"
+                android:inputType="textAutoCorrect"
+                android:maxLines="1"
+                android:singleLine="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="22dp"
-        android:text="Real Price :"
-        android:id="@+id/productRealPrice"
-        android:layout_marginTop="38dp"
-        android:layout_below="@+id/productPrice"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        </android.support.design.widget.TextInputLayout>
 
-    <EditText
-        android:layout_width="145dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/inputRealPrice"
-        android:layout_gravity="right"
-        android:layout_alignBottom="@+id/productRealPrice"
-        android:layout_alignRight="@+id/inputProductPrice"
-        android:layout_alignEnd="@+id/inputProductPrice"
-        android:layout_toRightOf="@+id/productRealPrice"
-        android:layout_toEndOf="@+id/productRealPrice"
-        android:text="Enter product real price" />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="22dp"
-        android:text="Image URL:"
-        android:id="@+id/productImageUrl"
-        android:layout_marginTop="39dp"
-        android:layout_below="@+id/productRealPrice" />
+            <EditText
+                android:id="@+id/product_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_product_description"
+                android:inputType="textAutoCorrect|textMultiLine"
+                android:lines="2"
+                android:maxLines="4" />
 
-    <EditText
-        android:layout_width="145dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/inputImageURL"
-        android:layout_gravity="right"
-        android:layout_alignBottom="@+id/productImageUrl"
-        android:layout_alignRight="@+id/inputRealPrice"
-        android:layout_alignEnd="@+id/inputRealPrice"
-        android:layout_toRightOf="@+id/productImageUrl"
-        android:layout_toEndOf="@+id/productImageUrl"
-        android:text="Enter product image URL" />
+        </android.support.design.widget.TextInputLayout>
 
-    <EditText
-        android:layout_width="145dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/inputDescription"
-        android:layout_gravity="right"
-        android:layout_centerVertical="true"
-        android:layout_alignRight="@+id/inputRealPrice"
-        android:layout_alignEnd="@+id/inputRealPrice"
-        android:layout_toRightOf="@+id/productImageUrl"
-        android:layout_toEndOf="@+id/productImageUrl"
-        android:text="Enter product description" />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="22dp"
-        android:text="Description:"
-        android:id="@+id/productDescription"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+            <EditText
+                android:id="@+id/product_starting_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_product_starting_price"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                android:singleLine="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add product"
-        android:id="@+id/productAddProduct"
-        android:layout_marginTop="33dp"
-        android:layout_below="@+id/inputDescription"
-        android:layout_centerHorizontal="true" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/product_final_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_product_final_price"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                android:singleLine="false" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearLayout02"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:id="@+id/image_select_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/prompt_add_image"
+                android:layout_gravity="center_vertical"
+                style="?android:textAppearanceLarge">
+
+            </TextView>
+
+            <Button
+                android:id="@+id/select_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:text="@string/prompt_add_image_select">
+            </Button>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/action_add_product"
+                style="?android:textAppearanceSmall"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/action_add_product"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">auction</string>
+    <string name="app_name">Auction</string>
     <string name="title_activity_login">Sign in</string>
+    <string name="title_add_product_activity">Add a product</string>
 
     <!-- Login strings -->
     <string name="prompt_username">Username</string>
@@ -12,12 +13,35 @@
     <string name="error_field_required">This field is required</string>
     <string name="error_username_exists">This username already exists</string>
 
-    <!-- Others -->
+    <!-- Add product strings -->
+
+    <string name="prompt_product_name">Name</string>
+    <string name="prompt_product_description">Description</string>
+    <string name="prompt_product_starting_price">Starting price</string>
+    <string name="prompt_product_final_price">Final price</string>
+    <string name="prompt_take_picture">Take picture</string>
+    <string name="prompt_add_image">Image</string>
+    <string name="prompt_add_image_select">Select</string>
+    <string name="pug_notification_title">Product added!</string>
+    <string name="pug_notification_message">You have successfully added a product. You will be notifier as soon as someone bids on it.</string>
+
+    <!-- Utils -->
     <string name="preference_file_key">com.auction.auction.prefs</string>
     <string name="auth_token_pref_key">authToken</string>
     <string name="categories_cache_pref_key">categoriesLastCached</string>
-    <string name="action_settings">Settings</string>
+
+    <!-- Toolbar -->
     <string name="action_add_product">Add product</string>
     <string name="action_logout">Logout</string>
 
+    <!-- Error strings -->
+    <string name="product_could_not_be_added">Product could not be added. Try again later.</string>
+    <string name="image_upload_service_down">The images service is down; please try again later.</string>
+    <string name="starting_price_lower_than_final">The starting price show be lower than the final price.</string>
+    <string name="product_final_price_zero">The product final price cannot be zero.</string>
+    <string name="could_not_fetch_categories">Could not fetch categories. Try again later</string>
+    <string name="must_choose_a_category_first">You must choose a category first.</string>
+    <string name="no_products_for_category">No products for this category so far.</string>
+    <string name="could_not_fetch_products">Could not fetch products. Try again later</string>
+    <string name="network_issue_or_server_problem">There is a network issue or problem with the server.</string>
 </resources>

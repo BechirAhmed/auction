@@ -3,7 +3,7 @@
     package="com.auction.auction">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,7 +18,10 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".AddProductActivity"
+            android:label="@string/title_add_product_activity" />
     </application>
 
 </manifest>
